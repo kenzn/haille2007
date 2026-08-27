@@ -1,0 +1,5 @@
+node_modules/
+data/
+.env
+.venv/
+node-v24.20.0-linux-x64/

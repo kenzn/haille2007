@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DONZA HUB - Programa de Bolsas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Sora:wght@400;600;700;800&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky: #18b7ff;
+    --sky-deep: #0877d1;
+    --sky-pale: #e7f7ff;
+    --white: #ffffff;
+    --ink: #062b52;
+    --green: #b8ff00;
+    --green-deep: #76c900;
+    --line: rgba(6,43,82,0.14);
+    --radius: 14px;
+    --maxw: 1180px;
+    --hero-overlay: rgba(3,24,52,0.7);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:'Sora', sans-serif;
+    color:var(--ink);
+    background:linear-gradient(135deg, #ffffff 0%, var(--sky-pale) 100%);
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.brand{font-family:'Space Grotesk', sans-serif;}
+  .eyebrow{font-family:'IBM Plex Mono', monospace; text-transform:uppercase; letter-spacing:.14em; font-size:.72rem;}
+  a{color:inherit;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    min-height:46px; padding:12px 20px; border:1px solid transparent;
+    border-radius:8px; text-decoration:none; font:600 .9rem 'Sora', sans-serif;
+    cursor:pointer; transition:transform .2s ease, background .2s ease, box-shadow .2s ease;
+  }
+  .btn-outline:hover{ background:rgba(184,255,0,.14); border-color:var(--green); color:var(--green); transform:translateY(-3px); }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:12px; }
+  .tag-pill{ display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; font-size:.78rem; font-weight:600; }
+  .dot{ width:8px; height:8px; border-radius:50%; flex:none; }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, select:focus-visible{
+    outline:3px solid var(--green-deep);
+    outline-offset:2px;
+    border-radius:4px;
+  }
+
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(255,255,255,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+    box-shadow:0 6px 24px rgba(6,43,82,.06);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:14px;
+    padding:14px 0;
+  }
+  .brand{
+    display:flex; align-items:center; gap:10px;
+    font-weight:700; font-size:1.15rem; letter-spacing:-0.01em;
+    text-decoration:none; color:var(--ink);
+  }
+  .brand-mark{
+    width:36px; height:36px; border-radius:9px;
+    background:#fff url('gallery/donza-hub-logo.jpeg') center / cover no-repeat;
+    position:relative; flex:none;
+    box-shadow:0 0 0 2px var(--green) inset;
+    overflow:hidden;
+  }
+  nav ul{
+    list-style:none; display:flex; gap:2px; margin:0; padding:0;
+  }
+  nav ul li a{
+    display:block; padding:10px 16px; text-decoration:none;
+    font-weight:600; font-size:.92rem; color:var(--ink);
+    border-radius:100px; transition:background .18s ease, color .18s ease;
+  }
+  nav ul li a:hover{ background:var(--sky-pale); color:var(--sky-deep); }
+  .nav-cta{
+    background:var(--ink); color:var(--white) !important;
+    padding:10px 20px !important;
+  }
+  .nav-cta:hover{ background:var(--sky-deep) !important; color:var(--white) !important; }
+  .burger{ display:none; background:none; border:none; cursor:pointer; padding:8px; }
+  .burger span{ display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; }
+
+    /* HERO: local NIMS and campus imagery */
+  .hero{
+    position:relative; overflow:hidden;
+    min-height:520px;
+    padding:72px 0 60px;
+    border-bottom:1px solid var(--line);
+    color:white;
+    display:flex; align-items:center;
+    /* layered background: NIMS-like campus (left) + other university (right) */
+    background-image:
+      linear-gradient(var(--hero-overlay), rgba(8,38,59,0.12)),
+      url('gallery/nims.jpg.jpg'),
+      url('gallery/students.webp');
+    background-repeat:no-repeat;
+    background-size: cover, 50% auto, 50% auto;
+    background-position: center, left center, right center;
+    background-blend-mode: overlay, normal, normal;
+    animation:none;
+  }
+  .hero .wrap{ display:grid; grid-template-columns:1fr 430px; gap:48px; align-items:center; }
+  .hero .tag-pill{ background:rgba(184,255,0,.14); color:var(--green); border:1px solid rgba(184,255,0,.35); box-shadow:0 0 22px rgba(184,255,0,.12); }
+  .hero h1{
+    font-size:clamp(2.2rem, 4.4vw, 3rem);
+    line-height:1.02; letter-spacing:-0.01em; margin:16px 0 14px; color:#fff;
+  }
+  .hero h1 em{ font-style:normal; color:var(--green); background:linear-gradient(180deg, transparent 62%, rgba(184,255,0,.16) 62%); }
+  .hero p.lead{ font-size:1.02rem; color:rgba(255,255,255,0.92); max-width:58ch; margin:0 0 26px; line-height:1.6; }
+  .btn-primary{ background:var(--green); color:var(--ink); box-shadow:0 14px 30px -12px rgba(0,0,0,.45); }
+  .btn-primary:hover{ background:#d3ff59; transform:translateY(-3px); box-shadow:0 16px 30px -12px rgba(184,255,0,.6); }
+  .btn-outline{ background:transparent; color:#fff; border-color:rgba(255,255,255,.22); }
+  .seal-card{
+    background:rgba(255,255,255,0.06); border-radius:22px; padding:28px; color:var(--white);
+    border:1px solid rgba(255,255,255,0.06);
+    box-shadow:0 20px 40px -18px rgba(0,0,0,.45);
+    animation:none;
+  }
+  .seal-logo{ width:128px; height:128px; object-fit:cover; margin:0 auto 24px; border-radius:8px; background:#fff; }
+  .seal-card h3, .seal-card p, .seal-list li{ color:rgba(255,255,255,0.95); }
+
+  /* keep rest of the layout mostly unchanged */
+  .hero-stats{ display:flex; gap:22px; margin-top:28px; flex-wrap:wrap; }
+  .hero-stats div strong{ display:block; font-family:'Space Grotesk'; font-size:1.4rem; color:#fff; }
+  .hero-stats div span{ font-size:.82rem; color:rgba(255,255,255,.8); }
+
+  section{ padding:84px 0; background:transparent; }
+  section.alt{ background:var(--sky-pale); }
+
+  section > .wrap{ animation:sectionReveal .8s ease both; }
+  .about-card, .doc-card, .contact-card, .apply-panel, .upload-box{
+    transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  }
+  .about-card:hover, .doc-card:hover, .contact-card:hover, .apply-panel:hover{
+    transform:translateY(-6px);
+    box-shadow:0 18px 36px rgba(6,43,82,.13);
+    border-color:rgba(24,183,255,.5);
+  }
+
+  /* small visual polish for cards and upload area */
+  .doc-card{ background:rgba(255,255,255,0.98); }
+  .upload-box{ background:rgba(255,255,255,0.9); border-color:rgba(8,38,59,0.06); }
+  .upload-box.dragover, .upload-box:hover{ background:#f3efe6; border-color:var(--sky-deep); box-shadow:0 0 0 4px rgba(178,138,60,.16); transform:translateY(-3px); }
+  .upload-icon{ color:var(--sky-deep); animation:uploadBounce 2.2s ease-in-out infinite; }
+  .progress-bar span{ background:linear-gradient(90deg, var(--sky), var(--green)); transition:width .45s ease; }
+
+  @keyframes heroReveal{ from{opacity:0; transform:translateY(18px)} to{opacity:1; transform:translateY(0)} }
+  @keyframes sectionReveal{ from{opacity:0; transform:translateY(22px)} to{opacity:1; transform:translateY(0)} }
+  @keyframes cardFloat{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+  @keyframes brandPulse{ 0%,100%{box-shadow:0 0 0 3px var(--green) inset, 0 0 18px rgba(184,255,0,.3)} 50%{box-shadow:0 0 0 3px var(--green) inset, 0 0 28px rgba(184,255,0,.65)} }
+  @keyframes uploadBounce{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+  @keyframes heroTextReveal{ from{opacity:0; transform:translateY(28px); filter:blur(6px)} to{opacity:1; transform:translateY(0); filter:blur(0)} }
+  @keyframes heroImageDrift{ 0%,100%{transform:scale(1.02) translate3d(0,0,0)} 50%{transform:scale(1.08) translate3d(-1.5%, -1%, 0)} }
+  @keyframes goldShimmer{ 0%,100%{box-shadow:0 0 0 0 rgba(208,173,88,0)} 50%{box-shadow:0 0 0 7px rgba(208,173,88,.1), 0 12px 28px rgba(0,0,0,.22)} }
+  @keyframes quoteReveal{ from{opacity:0; transform:translateX(22px)} to{opacity:1; transform:translateX(0)} }
+  @keyframes lineGrow{ from{transform:scaleX(0); transform-origin:left} to{transform:scaleX(1); transform-origin:left} }
+
+  .hero > .wrap > div:first-child{ animation:heroTextReveal .9s .15s cubic-bezier(.2,.75,.25,1) both; }
+  .hero .seal-card{ animation:heroTextReveal .9s .4s cubic-bezier(.2,.75,.25,1) both; }
+  .hero-media img{ animation:heroImageDrift 14s ease-in-out infinite; }
+  .hero-media img:nth-child(2){ animation-delay:-7s; }
+  .hero-logo,.seal-logo{ animation:goldShimmer 4s ease-in-out infinite; }
+  .section-head{ animation:heroTextReveal .8s cubic-bezier(.2,.75,.25,1) both; }
+  .about-card,.doc-card,.service-card{ animation:heroTextReveal .75s cubic-bezier(.2,.75,.25,1) both; }
+  .about-card:nth-child(2),.doc-card:nth-child(2),.service-card:nth-child(2){ animation-delay:.1s; }
+  .about-card:nth-child(3),.doc-card:nth-child(3),.service-card:nth-child(3){ animation-delay:.2s; }
+  .about-card:nth-child(4),.doc-card:nth-child(4){ animation-delay:.3s; }
+  .about-card:nth-child(5),.doc-card:nth-child(5){ animation-delay:.4s; }
+  .about-card:nth-child(6),.doc-card:nth-child(6){ animation-delay:.5s; }
+  .service-card{ transition:transform .35s cubic-bezier(.2,.75,.25,1), box-shadow .35s ease, border-color .35s ease; }
+  .service-card:hover{ transform:translateY(-10px) rotateX(1deg); box-shadow:0 22px 42px rgba(16,43,63,.16); }
+  .testimonial-section blockquote{ animation:quoteReveal .85s .2s cubic-bezier(.2,.75,.25,1) both; }
+  .testimonial-section blockquote::before{ content:"“"; display:block; height:34px; color:var(--green); font:700 4.5rem/1 'Space Grotesk',sans-serif; animation:lineGrow .7s .45s ease both; }
+  .testimonial-photo{ transition:transform .5s cubic-bezier(.2,.75,.25,1), box-shadow .5s ease; }
+  .testimonial-photo:hover{ transform:scale(1.06) rotate(-3deg); box-shadow:0 16px 30px rgba(0,0,0,.3); }
+  .step-dot{ transition:transform .3s ease, background .3s ease, box-shadow .3s ease; }
+  .step:hover .step-dot{ transform:translateY(-6px) scale(1.08); background:var(--green); color:var(--navy); box-shadow:0 8px 18px rgba(208,173,88,.3); }
+  .btn{ position:relative; overflow:hidden; }
+  .btn::after{ content:""; position:absolute; inset:0; background:linear-gradient(110deg, transparent 25%, rgba(255,255,255,.28) 50%, transparent 75%); transform:translateX(-120%); transition:transform .6s ease; }
+  .btn:hover::after{ transform:translateX(120%); }
+
+  /* responsive adjustments */
+  @media (max-width: 1100px){
+    .hero .wrap{ grid-template-columns:1fr; gap:28px; padding-bottom:24px; }
+    .hero{ min-height:620px; }
+    .hero-media{ width:100%; opacity:.42; }
+  }
+  @media (max-width: 900px){
+    nav ul{ display:none; }
+    .burger{ display:block; }
+    .hero-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .step-track{ grid-template-columns:1fr 1fr; row-gap:28px; }
+    .step-track::before{ display:none; }
+    .apply-panel{ grid-template-columns:1fr; }
+    .doc-grid{ grid-template-columns:1fr 1fr; }
+    .contact-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+  }
+  @media (max-width: 560px){
+    .wrap{ padding:0 18px; }
+    .doc-grid{ grid-template-columns:1fr; }
+    .row2{ grid-template-columns:1fr; }
+    .value-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; }
+    .hero-stats{ gap:20px; }
+    section{ padding:60px 0; }
+  }
+
+  .mobile-nav{
+    display:none; flex-direction:column; background:var(--white);
+    border-top:1px solid var(--line); padding:10px 28px 18px;
+  }
+  .mobile-nav.open{ display:flex; }
+  .mobile-nav a{ padding:12px 0; text-decoration:none; color:var(--ink); font-weight:600; border-bottom:1px solid var(--line); }
+
+  footer{ background:var(--ink); color:rgba(255,255,255,.75); padding:52px 0 26px; }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:32px; margin-bottom:40px; }
+
+  /* Institutional visual system */
+  :root{
+    --sky:#b28a3c;
+    --sky-deep:#765a24;
+    --sky-pale:#f3efe6;
+    --ink:#171717;
+    --green:#d0ad58;
+    --green-deep:#8f6e2b;
+    --line:#ded7c8;
+    --navy:#171717;
+    --mist:#f7f6f2;
+    --blue-section:#f1eee6;
+    --gold-section:#fbf7ea;
+    --teal-section:#f1f2ed;
+  }
+  body{ background:var(--mist); color:var(--ink); }
+  .wrap{ max-width:1160px; }
+  section{ position:relative; padding:92px 0; background:#fff; }
+  section:nth-of-type(2){ background:var(--blue-section); }
+  section:nth-of-type(3){ background:#fff; }
+  section:nth-of-type(4){ background:var(--gold-section); }
+  section:nth-of-type(5){ background:var(--teal-section); }
+  section.alt{ background:var(--blue-section); }
+  section > .wrap{ animation:sectionReveal .7s ease both; }
+  .section-head{ max-width:720px; margin-bottom:42px; }
+  .section-head .eyebrow{ color:var(--sky-deep); font-weight:700; }
+  .section-head h2{ margin:12px 0 14px; font-size:clamp(2rem,3.5vw,3rem); line-height:1.08; letter-spacing:-.025em; color:var(--navy); }
+  .section-head p{ margin:0; color:#526b7b; line-height:1.7; max-width:66ch; }
+  header{ background:rgba(255,255,255,.96); border-bottom-color:#d8e4e9; box-shadow:0 5px 20px rgba(16,43,63,.07); }
+  .brand{ color:var(--navy); letter-spacing:.02em; }
+  .brand-mark{ box-shadow:0 0 0 2px var(--green) inset; }
+  footer .brand-mark{ filter:invert(1); }
+  nav ul li a{ color:#39566a; border-radius:6px; }
+  nav ul li a:hover{ background:var(--blue-section); color:var(--sky-deep); }
+  @media (max-width:1100px){
+    nav ul{ display:none; }
+    .burger{ display:block; }
+    .nav-cta{ display:none!important; }
+  }
+  .nav-cta{ background:var(--navy); border-radius:5px; }
+  .nav-cta:hover{ background:var(--sky-deep)!important; }
+  .hero{ min-height:590px; isolation:isolate; background:#171717; border-bottom:4px solid var(--green); }
+  .hero-media{ position:absolute; z-index:-1; top:0; right:0; bottom:0; width:58%; display:grid; grid-template-columns:1fr 1fr; background:#171717; overflow:hidden; }
+  .hero-media img{ width:100%; height:100%; min-width:0; object-fit:contain; object-position:center; background:#171717; }
+  .hero-media::after{ content:""; position:absolute; inset:0; background:linear-gradient(90deg,#171717 0%,rgba(23,23,23,.92) 10%,rgba(23,23,23,.32) 30%,transparent 48%),linear-gradient(90deg,transparent 42%,rgba(23,23,23,.88) 50%,transparent 58%); pointer-events:none; }
+  .hero .wrap{ position:relative; z-index:1; margin-left:0; margin-right:auto; }
+  .hero .tag-pill{ background:rgba(213,169,40,.16); color:#f4d77b; border-color:rgba(213,169,40,.52); box-shadow:none; }
+  .hero-logo{ width:132px; height:132px; object-fit:cover; margin:0 0 24px; padding:8px; background:#fff; border:3px solid var(--green); border-radius:10px; box-shadow:0 12px 28px rgba(0,0,0,.2); }
+  .hero h1{ font-size:clamp(2.6rem,5vw,4.3rem); letter-spacing:-.035em; }
+  .hero h1 em{ color:#f0cf62; background:none; }
+  .hero p.lead{ max-width:62ch; color:rgba(255,255,255,.82); }
+  .btn{ border-radius:5px; min-height:48px; }
+  .btn-primary{ background:var(--green); color:var(--navy); box-shadow:0 8px 20px rgba(0,0,0,.16); }
+  .btn-primary:hover{ background:#edc957; }
+  .btn-outline{ border-color:rgba(255,255,255,.48); }
+  .seal-card{ border-radius:8px; background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.25); backdrop-filter:blur(8px); }
+  .seal-logo{ border:2px solid var(--green); box-shadow:0 10px 24px rgba(0,0,0,.18); }
+  .seal-inner h3, .seal-inner > p{ text-align:center; }
+  .seal-card h3{ font-size:1.35rem; }
+  .hero-stats{ border-top:1px solid rgba(255,255,255,.25); padding-top:20px; }
+  .hero-stats div strong{ color:#f0cf62; }
+  .hero-stats .stat-icon{ display:grid; place-items:center; width:30px; height:30px; margin-bottom:8px; border:1px solid rgba(240,207,98,.65); border-radius:50%; color:#f0cf62; font:700 1rem 'Space Grotesk',sans-serif; }
+  .hero-stats .stat-icon.universities::before{ content:"▦"; }
+  .hero-stats .stat-icon.students::before{ content:"◎"; }
+  .hero-stats .stat-icon.graduates::before{ content:"↗"; }
+  .about-grid{ display:grid; grid-template-columns:1fr 1.15fr; gap:28px; align-items:start; }
+  .value-grid{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .about-card,.doc-card,.contact-card,.apply-panel{ background:#fff; border:1px solid var(--line); border-radius:7px; padding:26px; box-shadow:0 8px 22px rgba(16,43,63,.055); }
+  .about-card{ margin-bottom:16px; }
+  .about-card h4,.doc-card h4{ margin:16px 0 8px; color:var(--navy); font-size:1.05rem; }
+  .about-card p,.doc-card p{ margin:0; color:#5b7180; line-height:1.65; font-size:.9rem; }
+  .num-badge,.step-dot{ display:grid; place-items:center; width:42px; height:42px; border-radius:5px; background:var(--navy); color:#f3d36d; font:700 .78rem 'IBM Plex Mono',monospace; }
+  .doc-icon,.info-ic{ display:grid; place-items:center; width:44px; height:44px; border-radius:50%; background:var(--blue-section); color:var(--sky-deep); }
+  .doc-symbol{ width:16px; height:21px; border:2px solid currentColor; border-radius:2px; position:relative; }
+  .doc-symbol::before{ content:""; position:absolute; left:3px; right:3px; top:6px; height:2px; background:currentColor; box-shadow:0 5px 0 currentColor; }
+  .doc-symbol::after{ content:""; position:absolute; top:-2px; right:-2px; width:6px; height:6px; background:var(--blue-section); border-left:2px solid currentColor; border-bottom:2px solid currentColor; }
+  .step-track{ display:grid; grid-template-columns:repeat(4,1fr); gap:24px; position:relative; margin-bottom:48px; }
+  .step-track::before{ content:""; position:absolute; top:21px; left:9%; right:9%; height:1px; background:#c8d9e1; z-index:0; }
+  .step{ position:relative; z-index:1; }
+  .step-dot{ margin-bottom:18px; border:5px solid var(--gold-section); background:var(--sky-deep); color:#fff; }
+  .step h4{ margin:0 0 8px; color:var(--navy); }
+  .step p{ margin:0; font-size:.88rem; line-height:1.55; color:#5b7180; }
+  .apply-panel{ display:grid; grid-template-columns:.8fr 1.2fr; gap:44px; padding:36px; border-top:4px solid var(--green); }
+  .apply-copy h3{ margin-top:0; font-size:1.55rem; }
+  .apply-copy p{ color:#5b7180; line-height:1.65; }
+  .criteria{ padding:0; margin:24px 0 0; list-style:none; }
+  .criteria li{ padding:10px 0 10px 24px; color:#405c6e; border-bottom:1px solid #e5ecef; position:relative; font-size:.88rem; }
+  .criteria li::before{ content:""; position:absolute; left:0; top:15px; width:10px; height:10px; border-radius:50%; background:var(--green); }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .field{ margin-bottom:17px; }
+  .field label{ display:block; margin-bottom:7px; color:var(--navy); font-size:.78rem; font-weight:700; }
+  input,select,textarea{ width:100%; padding:12px 13px; border:1px solid #c8d8df; border-radius:4px; background:#fbfdfe; color:var(--ink); font:400 .88rem 'Sora',sans-serif; }
+  input:focus,select:focus,textarea:focus{ border-color:var(--sky); outline:3px solid rgba(11,110,170,.12); }
+  textarea{ resize:vertical; }
+  .btn-block{ width:100%; }
+  .form-note{ color:#718592; font-size:.75rem; text-align:center; }
+  .status-ok{ display:none; padding:12px; color:#276451; background:#e8f5ee; border:1px solid #bddfce; border-radius:4px; font-size:.8rem; }
+  .doc-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .services-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; align-items:stretch; }
+  .service-card{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:7px; padding:26px; box-shadow:0 8px 22px rgba(16,43,63,.055); }
+  .service-card.recommended{ border-top:4px solid var(--green); padding-top:23px; }
+  .service-card h3{ margin:14px 0 8px; color:var(--navy); font-size:1.25rem; }
+  .service-card > p{ margin:0 0 18px; color:#5b7180; line-height:1.6; font-size:.88rem; }
+  .service-price{ margin:0 0 18px; color:var(--navy); font:700 2rem 'Space Grotesk',sans-serif; }
+  .service-price span{ color:#6c818d; font:500 .78rem 'Sora',sans-serif; }
+  .service-card ul{ flex:1; margin:0; padding:0; list-style:none; }
+  .service-card li{ padding:10px 0 10px 22px; border-top:1px solid #e5ecef; color:#405c6e; font-size:.82rem; line-height:1.45; position:relative; }
+  .service-card li::before{ content:"+"; position:absolute; left:0; color:var(--green-deep); font-weight:700; }
+  .service-note{ margin:18px 0 0; padding-top:14px; border-top:1px solid var(--line); color:#718592; font-size:.76rem; line-height:1.5; }
+  .testimonial-section{ background:#171717; color:#fff; }
+  .testimonial-section .wrap{ max-width:920px; }
+  .testimonial-section .eyebrow{ color:var(--green); }
+  .testimonial-content{ display:grid; grid-template-columns:180px 1fr; gap:42px; align-items:start; }
+  .testimonial-profile{ text-align:center; }
+  .testimonial-photo{ width:120px; height:120px; object-fit:cover; border:3px solid var(--green); border-radius:50%; background:#fff; }
+  .testimonial-profile .testimonial-photo{ margin:0 auto 16px; }
+  .testimonial-section blockquote{ margin:0; padding:28px 0 0; border-top:1px solid rgba(208,173,88,.45); }
+  .testimonial-section blockquote p{ margin:0 0 18px; color:#fff; font-size:clamp(1rem,2vw,1.18rem); line-height:1.75; }
+  .testimonial-section cite{ display:block; color:#ffdc73; font:600 1rem 'Space Grotesk',sans-serif; font-style:normal; line-height:1.4; }
+  @media (max-width:560px){ .testimonial-content{ grid-template-columns:1fr; gap:24px; } .testimonial-profile .testimonial-photo{ margin:0 auto 16px; } }
+  .testimonial-section{ background:var(--gold-section); color:var(--ink); }
+  .testimonial-section .section-head h2{ color:var(--ink)!important; }
+  .testimonial-section blockquote{ border-top-color:var(--green); }
+  .testimonial-section blockquote p{ color:var(--ink); }
+  .testimonial-section cite{ color:var(--sky-deep); }
+  @keyframes heroTextReveal{ from{opacity:0; transform:translateY(54px) scale(.96); filter:blur(10px)} to{opacity:1; transform:translateY(0) scale(1); filter:blur(0)} }
+  @keyframes heroImageDrift{ 0%,100%{transform:scale(1.03) translate3d(0,0,0)} 50%{transform:scale(1.12) translate3d(-2.5%, -1.5%, 0)} }
+  @keyframes goldShimmer{ 0%,100%{transform:scale(1); box-shadow:0 0 0 0 rgba(208,173,88,0)} 50%{transform:scale(1.045); box-shadow:0 0 0 9px rgba(208,173,88,.14), 0 16px 34px rgba(0,0,0,.26)} }
+  @keyframes quoteReveal{ from{opacity:0; transform:translateX(60px) scale(.97)} to{opacity:1; transform:translateX(0) scale(1)} }
+  @keyframes statPulse{ 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px) scale(1.04)} }
+  .hero-stats div{ animation:statPulse 3.2s ease-in-out infinite; }
+  .hero-stats div:nth-child(2){ animation-delay:.35s; }
+  .hero-stats div:nth-child(3){ animation-delay:.7s; }
+  .about-card:hover,.doc-card:hover,.contact-card:hover,.apply-panel:hover{ transform:translateY(-12px) scale(1.02); }
+  .testimonial-profile{ animation:heroTextReveal .9s .1s cubic-bezier(.2,.75,.25,1) both; }
+  .testimonial-photo{ animation:goldShimmer 3.2s ease-in-out infinite; }
+  .doc-card{ padding:24px; }
+  .doc-card:hover,.about-card:hover,.contact-card:hover,.apply-panel:hover{ border-color:rgba(11,110,170,.45); box-shadow:0 16px 30px rgba(16,43,63,.1); }
+  .upload-box{ display:block; margin-top:28px; padding:34px; text-align:center; border:1px dashed #a9c2ce; border-radius:7px; background:rgba(255,255,255,.72); cursor:pointer; }
+  .upload-box h4{ margin:14px 0 7px; color:var(--navy); }
+  .upload-box p{ margin:0; color:#6c818d; font-size:.8rem; }
+  .upload-box input{ display:none; }
+  .upload-icon{ color:var(--sky-deep); font-size:2rem; }
+  .checklist-status{ margin-top:18px; color:#526b7b; font-size:.82rem; }
+  .progress-bar{ height:7px; margin-top:9px; overflow:hidden; border-radius:20px; background:#dce8ed; }
+  .progress-bar span{ display:block; width:0; height:100%; background:var(--green); }
+  .contact-grid{ display:grid; grid-template-columns:1fr .8fr; gap:70px; align-items:start; }
+  .info-list{ list-style:none; padding:0; margin:0 0 30px; }
+  .info-list li{ display:flex; gap:14px; align-items:center; padding:14px 0; border-bottom:1px solid #d8e7e5; }
+  .info-list strong,.info-list span{ display:block; }
+  .info-list strong{ color:var(--navy); font-size:.9rem; }
+  .info-list span{ color:#69807f; font-size:.76rem; margin-top:4px; }
+  .info-ic{ background:var(--navy); color:#f3d36d; font-size:1.1rem; }
+  .info-ic::before{ display:block; }
+  .info-ic.email::before{ content:"✉"; }
+  .info-ic.phone::before{ content:"+"; font:700 1.25rem 'Space Grotesk',sans-serif; }
+  .info-ic.support::before{ content:"?"; font:700 1.05rem 'Space Grotesk',sans-serif; }
+  .faq-item{ border-bottom:1px solid #d8e7e5; padding:17px 0; }
+  .faq-item summary{ cursor:pointer; color:var(--navy); font-weight:700; font-size:.9rem; }
+  .faq-item p{ color:#5b7180; line-height:1.6; font-size:.84rem; }
+  .contact-card{ border-top:4px solid var(--sky); }
+  .contact-card input,.contact-card textarea{ background:#f8fbfc!important; }
+  footer{ background:#0d2536; border-top:4px solid var(--green); }
+  footer h5{ color:#fff; margin-top:0; margin-bottom:15px; font-size:.9rem; }
+  footer ul{ list-style:none; margin:0; padding:0; }
+  footer li{ margin:10px 0; font-size:.8rem; }
+  footer a{ color:rgba(255,255,255,.68); text-decoration:none; }
+  footer a:hover{ color:#f0cf62; }
+  .footer-bottom{ display:flex; justify-content:space-between; gap:20px; border-top:1px solid rgba(255,255,255,.16); padding-top:20px; color:rgba(255,255,255,.45); font-size:.72rem; }
+  .language-switch{ display:inline-flex; align-items:center; gap:3px; margin-left:10px; padding:3px; border:1px solid var(--line); border-radius:5px; background:#f7fafb; }
+  .language-switch button{ border:0; border-radius:3px; padding:6px 8px; background:transparent; color:#6a7d87; font:700 .68rem 'IBM Plex Mono',monospace; cursor:pointer; }
+  .language-switch button.active{ background:var(--navy); color:#fff; }
+  @media (max-width:900px){ .language-switch{ margin-left:auto; margin-right:8px; } }
+  @media (max-width:900px){ .nav-cta{ display:none!important; } }
+  @media (max-width:900px){ .about-grid,.contact-grid{ grid-template-columns:1fr; gap:28px; } .apply-panel{ grid-template-columns:1fr; } .doc-grid,.services-grid{ grid-template-columns:1fr 1fr; } }
+  @media (max-width:560px){ section{ padding:65px 0; } .value-grid,.doc-grid,.services-grid,.row2{ grid-template-columns:1fr; } .apply-panel{ padding:24px; } .footer-bottom{ flex-direction:column; } .hero h1{ font-size:clamp(2.1rem,10vw,3rem); } .hero-media{ top:35%; opacity:.28; } }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#home" class="brand"><span class="brand-mark" role="img" aria-label="DONZA HUB logo"></span> DONZA HUB</a>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#application">Application</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#services">Services &amp; Prices</a></li>
+        <li><a href="#testimonial">Testimonial</a></li>
+        <li><a href="#documents">Submit Documents</a></li>
+        <li><a href="#contact">Contact &amp; FAQ</a></li>
+      </ul>
+    </nav>
+    <a href="#application" class="btn nav-cta" style="display:inline-flex;">Apply Now</a>
+    <div class="language-switch" aria-label="Language selector">
+      <button type="button" id="ptButton" class="active" aria-pressed="true">PT</button>
+      <button type="button" id="enButton" aria-pressed="false">EN</button>
+    </div>
+    <button class="burger" id="burgerBtn" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobileNav">
+    <a href="#home">Home</a>
+    <a href="#application">Application</a>
+    <a href="#about">About Us</a>
+    <a href="#services">Services &amp; Prices</a>
+    <a href="#testimonial">Testimonial</a>
+    <a href="#documents">Submit Documents</a>
+    <a href="#contact">Contact &amp; FAQ</a>
+  </div>
+</header>
+
+<section id="home" class="hero">
+  <div class="hero-media" aria-hidden="true">
+    <img src="gallery/nims.jpg.jpg" alt="">
+    <img src="gallery/students.webp" alt="">
+  </div>
+  <div class="wrap">
+    <div>
+      <img class="hero-logo" src="gallery/donza-hub-logo.jpeg" alt="DONZA HUB">
+      <span class="tag-pill"><span class="dot" style="background:var(--green); box-shadow:0 0 0 4px rgba(208,173,88,0.18);"></span> Nims 26-27 applications open</span>
+      <h1>Funding the <em>next builders,</em><br>not just the top scorers.</h1>
+      <p class="lead">DONZA HUB awards tuition scholarships to students who show grit, curiosity and real-world initiative — not just a GPA. Apply once, get reviewed by real mentors, hear back in weeks.</p>
+      <div class="hero-actions">
+        <a href="#application" class="btn btn-primary">Start your application</a>
+        <a href="#about" class="btn btn-outline">Learn how it works</a>
+      </div>
+      <div class="hero-stats" aria-hidden="true">
+        <div><span class="stat-icon universities" aria-label="Universidades"></span><strong>50+</strong><span>Universidades reconhecidas em toda a Ásia</span></div>
+        <div><span class="stat-icon students" aria-label="Estudantes"></span><strong>500+</strong><span>Estudantes africanos beneficiados</span></div>
+        <div><span class="stat-icon graduates" aria-label="Graduados"></span><strong>100+</strong><span>Estudantes graduados em grandes mercados</span></div>
+      </div>
+    </div>
+
+    <aside class="seal-card" aria-hidden="false">
+      <div class="seal-inner">
+        <img class="seal-logo" src="gallery/donza-hub-logo.jpeg" alt="DONZA HUB">
+        <h3>Scholarship at a glance</h3>
+        <p>Everything you need before you begin</p>
+        <ul class="seal-list">
+          <li>Open to undergrad &amp; vocational students</li>
+          <li>One shared application, four document uploads</li>
+          <li>Rolling review — apply anytime before the deadline</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>
+<section id="about">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">About Us</span>
+      <h2>A scholarship hub built by former applicants.</h2>
+      <p>DONZA HUB started in 2025 when one university student (Haille Kensany) got tired of watching capable students give up on funding because the process was confusing. We rebuilt it from scratch: one form, transparent criteria, and a mentor on every file.</p>
+    </div>
+    <div class="about-grid">
+      <div>
+        <div class="about-card">
+          <div class="num-badge" aria-label="Missão">◎</div>
+          <h4>Our mission</h4>
+          <p>Remove the paperwork barrier between motivated students and the funding they've earned, and pair every scholar with a mentor for the year they're funded.</p>
+        </div>
+        <div class="about-card">
+          <div class="num-badge" aria-label="Avaliação">✓</div>
+          <h4>How review works</h4>
+          <p>Every application is read by two independent reviewers from our mentor network — never an algorithm alone — and scored against the same public rubric.</p>
+        </div>
+      </div>
+      <div class="value-grid">
+        <div class="about-card">
+          <div class="num-badge">01</div>
+          <h4>Transparency</h4>
+          <p>Our scoring rubric is public. You'll always know what you're being measured against.</p>
+        </div>
+        <div class="about-card">
+          <div class="num-badge">02</div>
+          <h4>Access first</h4>
+          <p>No application fee, no minimum GPA cutoff, no institution restriction.</p>
+        </div>
+        <div class="about-card">
+          <div class="num-badge">03</div>
+          <h4>Mentorship</h4>
+          <p>Every award comes with a mentor check-in, not just a one-time cheque.</p>
+        </div>
+        <div class="about-card">
+          <div class="num-badge">04</div>
+          <h4>Speed</h4>
+          <p>Rolling decisions — most applicants hear back inside three weeks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="services" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Services &amp; Prices</span>
+      <h2>Choose the right level of support for you.</h2>
+      <p>Three packages, from simple submission support to complete visa and university admission assistance.</p>
+    </div>
+    <div class="services-grid">
+      <article class="service-card">
+        <div class="num-badge">01</div>
+        <h3>Submission</h3>
+        <p>For students who already have their documents ready and only need support with the official submission.</p>
+        <div class="service-price">6.500 <span>MT · one-time payment</span></div>
+        <ul>
+          <li>Submission of documents on the official online portal</li>
+          <li>Completion and submission of the application form</li>
+          <li>Submission confirmation</li>
+        </ul>
+        <p class="service-note">The applicant is responsible for gathering and processing all required documents.</p>
+      </article>
+      <article class="service-card recommended">
+        <div class="num-badge">02</div>
+        <h3>Essential <span class="tag-pill">Recommended</span></h3>
+        <p>We help prepare the documents that matter most for visa approval.</p>
+        <div class="service-price">8.000 <span>MT · one-time payment</span></div>
+        <ul>
+          <li>Everything in Package 01</li>
+          <li>Preparation of essential documents required for the visa</li>
+          <li>Guidance on India-specific requirements</li>
+          <li>Review and validation before submission</li>
+        </ul>
+        <p class="service-note">We handle the essential visa documents; the remaining documents stay with the applicant.</p>
+      </article>
+      <article class="service-card">
+        <div class="num-badge">03</div>
+        <h3>Full Support</h3>
+        <p>The complete, end-to-end experience: we handle everything from start to finish.</p>
+        <div class="service-price">10.000 <span>MT · one-time payment</span></div>
+        <ul>
+          <li>Everything in Package 02</li>
+          <li>Guidance to the right places for each document in Mozambique</li>
+          <li>Support throughout the entire process</li>
+          <li>Complete visa submission</li>
+          <li>University admission process setup</li>
+        </ul>
+        <p class="service-note">Complete service. The student only needs to attend the stages that require their presence.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="testimonial" class="testimonial-section">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Testimonial</span>
+      <h2 style="color:#fff;">Um sonho que se tornou possível.</h2>
+    </div>
+    <div class="testimonial-content">
+      <div class="testimonial-profile">
+        <img class="testimonial-photo" src="gallery/domintilia-tchamo.jpg" alt="Domintilia Tchamo">
+        <cite>Domintilia Tchamo<br>Moçambique 🇮🇳</cite>
+      </div>
+      <blockquote class="testimonial-quote">
+        <p>“Sempre sonhei em estudar na Índia. Quando comecei a pesquisar como tratar tudo — visto, documentos, faculdade — parecia complicado demais para fazer sozinha. Foi aí que encontrei a DONZA HUB.”</p>
+        <p>“Em menos de 2 semanas, com o apoio deles, tratei toda a documentação necessária para o meu visto de estudante. Acompanharam-me em cada passo: dos documentos, à submissão, até à minha chegada à Índia. E o mais incrível é que o acompanhamento não parou aí — continuam comigo até hoje, sempre que preciso de ajuda.”</p>
+        <p>“Se sonhas em estudar na Índia como eu, a DONZA HUB torna esse sonho possível.”</p>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="application" class="alt">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Application</span>
+      <h2>Four steps from opening this page to a decision.</h2>
+      <p>The process is sequential on purpose — each step unlocks the next so you're never guessing what happens after you hit submit.</p>
+    </div>
+
+    <div class="stepper">
+      <div class="step-track">
+        <div class="step">
+          <div class="step-dot">1</div>
+          <h4>Create your profile</h4>
+          <p>Basic details, school, and the programme you're funding.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot">2</div>
+          <h4>Tell your story</h4>
+          <p>A short statement — no essay-writing service required.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot">3</div>
+          <h4>Submit documents</h4>
+          <p>Transcript, ID, and one recommendation letter.</p>
+        </div>
+        <div class="step">
+          <div class="step-dot">4</div>
+          <h4>Mentor review</h4>
+          <p>Two reviewers score your file within 18 days on average.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="apply-panel">
+      <div class="apply-copy">
+        <h3>Ready when you are</h3>
+        <p>Fill in the short form and we'll create your applicant profile and email you a secure link to finish steps 2–4, including document upload.</p>
+        <ul class="criteria">
+          <li>Enrolled or accepted into an accredited programme</li>
+          <li>Under 30 years old at time of application</li>
+          <li>Able to submit one academic reference</li>
+          <li>No minimum GPA — we read the whole file</li>
+        </ul>
+      </div>
+      <form id="applicationForm" novalidate>
+        <div class="row2">
+          <div class="field">
+            <label for="fullName">Full name</label>
+            <input id="fullName" name="fullName" type="text" placeholder="Haille Kensany" required>
+          </div>
+          <div class="field">
+            <label for="email">Email address</label>
+            <input id="email" name="email" type="email" placeholder="you@email.com" required>
+          </div>
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="programme">Field of study</label>
+            <input id="programme" name="programme" type="text" placeholder="e.g. Computer Science" required>
+          </div>
+          <div class="field">
+            <label for="level">Study level</label>
+            <select id="level" name="level" required>
+              <option value="" disabled selected>Select level</option>
+              <option>High school</option>
+              <option>Undergraduate</option>
+              <option>Vocational / trade</option>
+              <option>Postgraduate</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label for="statement">In one sentence, why this scholarship?</label>
+          <textarea id="statement" name="statement" rows="3" placeholder="Tell us briefly what you're working toward" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create my application</button>
+        <p class="form-note">You'll get an email with a link to finish document upload. No fee, ever.</p>
+        <p class="status-ok" id="formStatus">✓ Profile created — check your email for the next step (demo only, no data was sent anywhere).</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ...existing code... rest of the page (documents, contact, footer, scripts) unchanged ... -->
+<section id="documents">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="eyebrow">Submit Documents</span>
+      <h2>Four files. That's the whole checklist.</h2>
+      <p>Accepted formats: PDF, JPG or PNG, 10MB max per file. You can come back and finish this later using the link from step 1.</p>
+    </div>
+
+    <div class="doc-grid">
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Government ID</h4>
+        <p>A valid passport, national ID, or driver's licence to confirm your identity.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Academic transcript</h4>
+        <p>Your most recent transcript or report card, official or unofficial.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Reference letter</h4>
+        <p>One letter from a teacher, professor, or supervisor who knows your work.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Proof of admission</h4>
+        <p>Acceptance or enrolment letter from your school or training programme.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Financial need form <span style="color:#8AA0AF;font-weight:500;">(optional)</span></h4>
+        <p>Strengthens your review but is not required to submit an application.</p>
+      </div>
+      <div class="doc-card">
+        <div class="doc-icon" aria-hidden="true"><span class="doc-symbol"></span></div>
+        <h4>Headshot <span style="color:#8AA0AF;font-weight:500;">(optional)</span></h4>
+        <p>Used only if you're featured in our scholar spotlight, with your permission.</p>
+      </div>
+    </div>
+
+    <label class="upload-box" id="uploadBox" for="fileInput">
+      <div class="upload-icon">↑</div>
+      <h4>Drag files here, or click to browse</h4>
+      <p>PDF, JPG or PNG — up to 10MB each</p>
+      <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png">
+    </label>
+    <ul id="fileList"></ul>
+    <div class="checklist-status">
+      <span id="fileCount">0 of 4 required documents added</span>
+      <div class="progress-bar"><span id="progressFill"></span></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="alt">
+  <div class="wrap contact-grid">
+    <div>
+      <div class="section-head" style="margin-bottom:28px;">
+        <span class="eyebrow">Contact &amp; FAQ</span>
+        <h2>Still deciding? Talk to us first.</h2>
+        <p>Reach the review team directly, or check the answers we get asked the most.</p>
+      </div>
+      <ul class="info-list">
+        <li>
+          <div class="info-ic email" aria-hidden="true"></div>
+          <div><strong>donzahubin@gmail.com</strong><span>General questions, answered within 2 business days</span></div>
+        </li>
+        <li>
+          <div class="info-ic phone" aria-hidden="true"></div>
+          <div><strong>+91 9116325469</strong><span>Mon–Fri, 9am–7pm</span></div>
+        </li>
+        <li>
+          <div class="info-ic support" aria-hidden="true"></div>
+          <div><strong>Applicant support desk</strong><span>Live chat inside your applicant portal after step 1</span></div>
+        </li>
+      </ul>
+
+      <div>
+        <details class="faq-item" open>
+          <summary>Is there an application fee?</summary>
+          <p>No. DONZA HUB never charges to apply, review, or disburse a scholarship. Anyone asking you to pay is not us.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Can I apply if I'm still waiting on admission results?</summary>
+          <p>Yes — start your application now and upload proof of admission once you receive it, before the review deadline.</p>
+        </details>
+        <details class="faq-item">
+          <summary>How is the award amount decided?</summary>
+          <p>Reviewers score demonstrated need and initiative against our public rubric; award size follows the score band, not a fixed formula.</p>
+        </details>
+        <details class="faq-item">
+          <summary>What if I miss a document?</summary>
+          <p>Your file stays in draft. You'll get a reminder email and can finish uploading anytime before the deadline.</p>
+        </details>
+      </div>
+    </div>
+
+    <div class="contact-card">
+      <h3 style="margin-top:0;">Send us a message</h3>
+      <p style="color:#4A6577; font-size:.9rem; margin-top:-6px;">For anything not covered in the FAQ.</p>
+      <form id="contactForm" novalidate style="margin-top:18px;">
+        <div class="field">
+          <label for="cName" style="color:var(--ink);">Name</label>
+          <input id="cName" type="text" placeholder="Your name" required
+            style="background:var(--sky-pale); border:1px solid var(--line); color:var(--ink);">
+        </div>
+        <div class="field">
+          <label for="cEmail" style="color:var(--ink);">Email</label>
+          <input id="cEmail" type="email" placeholder="you@email.com" required
+            style="background:var(--sky-pale); border:1px solid var(--line); color:var(--ink);">
+        </div>
+        <div class="field">
+          <label for="cMsg" style="color:var(--ink);">Message</label>
+          <textarea id="cMsg" rows="4" placeholder="How can we help?" required
+            style="background:var(--sky-pale); border:1px solid var(--line); color:var(--ink);"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send message</button>
+        <p class="status-ok" id="contactStatus">✓ Message received — the team will reply within 2 business days (demo only).</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a href="#home" class="brand" style="color:var(--white);"><span class="brand-mark" role="img" aria-label="DONZA HUB logo"></span> DONZA HUB</a>
+        <p style="font-size:.85rem; color:rgba(255,255,255,.55); max-width:32ch; margin-top:14px; line-height:1.6;">Scholarships reviewed by mentors, not machines. No fees, ever.</p>
+      </div>
+      <div>
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About us</a></li>
+          <li><a href="#application">Application</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Applicants</h5>
+        <ul>
+          <li><a href="#documents">Submit documents</a></li>
+          <li><a href="#contact">FAQ</a></li>
+          <li><a href="#contact">Contact support</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Legal</h5>
+        <ul>
+          <li><a href="#">Privacy policy</a></li>
+          <li><a href="#">Terms of use</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 DONZA HUB. All rights reserved.</span>
+      <span>Made for students who don't quit.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burgerBtn = document.getElementById('burgerBtn');
+  const mobileNav = document.getElementById('mobileNav');
+  burgerBtn.addEventListener('click', () => {
+    const isOpen = mobileNav.classList.toggle('open');
+    burgerBtn.setAttribute('aria-expanded', isOpen);
+  });
+  mobileNav.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileNav.classList.remove('open');
+    burgerBtn.setAttribute('aria-expanded', 'false');
+  }));
+
+  const applicationForm = document.getElementById('applicationForm');
+  applicationForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!applicationForm.checkValidity()) { applicationForm.reportValidity(); return; }
+    document.getElementById('formStatus').style.display = 'block';
+    applicationForm.querySelector('button[type="submit"]').disabled = true;
+  });
+
+  const contactForm = document.getElementById('contactForm');
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!contactForm.checkValidity()) { contactForm.reportValidity(); return; }
+    document.getElementById('contactStatus').style.display = 'block';
+    contactForm.reset();
+  });
+
+  const uploadBox = document.getElementById('uploadBox');
+  const fileInput = document.getElementById('fileInput');
+  const fileList = document.getElementById('fileList');
+  const fileCount = document.getElementById('fileCount');
+  const progressFill = document.getElementById('progressFill');
+  let files = [];
+
+  function renderFiles(){
+    fileList.innerHTML = '';
+    files.forEach((f, i) => {
+      const li = document.createElement('li');
+      const sizeKb = (f.size / 1024).toFixed(0);
+      li.innerHTML = `<span class="fname">${f.name} <span style="color:#8AA0AF;">(${sizeKb} KB)</span></span>`;
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = currentLanguage === 'pt' ? 'Remover' : 'Remove';
+      btn.addEventListener('click', () => { files.splice(i,1); renderFiles(); });
+      li.appendChild(btn);
+      fileList.appendChild(li);
+    });
+    const count = Math.min(files.length, 4);
+    fileCount.textContent = currentLanguage === 'pt' ? `${count} de 4 documentos obrigatórios adicionados` : `${count} of 4 required documents added`;
+    progressFill.style.width = (count/4*100) + '%';
+  }
+
+  function addFiles(fileArr){
+    Array.from(fileArr).forEach(f => {
+      if (f.size <= 10 * 1024 * 1024) files.push(f);
+    });
+    renderFiles();
+  }
+
+  fileInput.addEventListener('change', (e) => addFiles(e.target.files));
+
+  ['dragover'].forEach(evt => uploadBox.addEventListener(evt, (e) => {
+    e.preventDefault(); uploadBox.classList.add('dragover');
+  }));
+  ['dragleave','drop'].forEach(evt => uploadBox.addEventListener(evt, (e) => {
+    e.preventDefault(); uploadBox.classList.remove('dragover');
+  }));
+  uploadBox.addEventListener('drop', (e) => {
+    if (e.dataTransfer.files.length) addFiles(e.dataTransfer.files);
+  });
+
+  let currentLanguage = 'pt';
+  const languageContent = {
+    pt: {
+      'header nav ul li a': ['Início', 'Candidatura', 'Sobre nós', 'Serviços e preços', 'Depoimento', 'Enviar documentos', 'Contato e FAQ'],
+      '.mobile-nav a': ['Início', 'Candidatura', 'Sobre nós', 'Serviços e preços', 'Depoimento', 'Enviar documentos', 'Contato e FAQ'],
+      '.nav-cta': 'Candidatar-se',
+      '.hero .tag-pill': '<span class="dot" style="background:var(--green); box-shadow:0 0 0 4px rgba(61,93,255,0.12);"></span> Candidaturas Nims 2026-2027 abertas',
+      '.hero h1': 'Financiando os <em>próximos construtores,</em><br>não apenas as melhores notas.',
+      '.hero .lead': 'A DONZA HUB oferece bolsas de estudo a estudantes que demonstram determinação, curiosidade e iniciativa prática — não apenas um bom GPA. Candidate-se uma vez, seja avaliado por mentores e receba uma resposta em poucas semanas.',
+      '.hero-actions .btn-primary': 'Começar candidatura',
+      '.hero-actions .btn-outline': 'Saiba como funciona',
+      '.hero-stats div > span:not(.stat-icon)': ['universidades reconhecidas entre as melhores da Ásia', 'estudantes africanos beneficiados pelo programa', 'graduados atuando em grandes mercados'],
+      '.seal-card h3': 'Bolsa em resumo',
+      '.seal-card p': 'Tudo o que precisa antes de começar',
+      '.seal-list li': ['Aberta a estudantes de graduação e cursos profissionais', 'Uma candidatura integrada e quatro documentos', 'Avaliação contínua — candidate-se antes do prazo final'],
+      '#about .eyebrow': 'Sobre nós',
+      '#about h2': 'Uma plataforma de bolsas criada por antigos candidatos.',
+      '#about .section-head p': 'A DONZA HUB começou em 2025, quando um estudante universitário (Haille Kensany) se cansou de ver estudantes capazes desistirem do financiamento porque o processo era confuso. Reconstruímos tudo do zero: um formulário, critérios transparentes e um mentor em cada candidatura.',
+      '#about .about-card h4': ['Nossa missão', 'Como funciona a avaliação', 'Transparência', 'Acesso em primeiro lugar', 'Mentoria', 'Agilidade'],
+      '#about .about-card p': ['Remover a barreira burocrática entre estudantes motivados e o financiamento que merecem, ligando cada bolsista a um mentor durante o ano financiado.', 'Cada candidatura é lida por dois avaliadores independentes da nossa rede de mentores — nunca apenas por um algoritmo — e avaliada com a mesma matriz pública.', 'A nossa matriz de avaliação é pública. Saberá sempre quais critérios serão considerados.', 'Sem taxa de candidatura, nota mínima ou restrição de instituição.', 'Cada bolsa inclui acompanhamento de um mentor, não apenas um pagamento único.', 'Decisões contínuas — a maioria dos candidatos recebe resposta em até três semanas.'],
+      '#services .eyebrow': 'Serviços e preços',
+      '#services h2': 'Escolha o nível de acompanhamento certo para si.',
+      '#services .section-head p': 'Três pacotes, desde apoio simples na submissão até assistência completa para o visto e a admissão universitária.',
+      '#services .service-card h3': ['Submissão', 'Essencial', 'Acompanhamento total'],
+      '#services .service-card > p': ['Para quem já tem os documentos prontos e só precisa de apoio na entrega oficial.', 'Ajudamos a tratar os documentos que realmente pesam na aprovação do visto.', 'A experiência completa: tratamos de tudo do início ao fim.'],
+      '#services .service-card li': ['Submissão dos documentos no portal oficial online', 'Preenchimento e envio do formulário de candidatura', 'Confirmação de submissão', 'Tudo do Pacote 01', 'Tratamento dos documentos essenciais exigidos para o visto', 'Orientação sobre os requisitos específicos da Índia', 'Revisão e validação antes da submissão', 'Tudo do Pacote 02', 'Indicação dos locais certos para tratar cada documento em Moçambique', 'Acompanhamento em todo o processo, do início ao fim', 'Submissão completa do visto', 'Criação do processo de admissão na faculdade ou universidade'],
+      '#services .service-note': ['O interessado é responsável por reunir e tratar todos os documentos exigidos.', 'Cuidamos do essencial para o visto; os restantes documentos ficam a cargo do interessado.', 'Serviço completo — o estudante só precisa de aparecer nas etapas que exigem presença.'],
+      '#services .service-price span': ['MT · pagamento único', 'MT · pagamento único', 'MT · pagamento único'],
+      '#application .eyebrow': 'Candidatura',
+      '#application h2': 'Quatro passos entre esta página e a sua decisão.',
+      '#application .section-head p': 'O processo é sequencial de propósito — cada etapa desbloqueia a próxima para que nunca fique sem saber o que acontece depois do envio.',
+      '.step h4': ['Crie o seu perfil', 'Conte a sua história', 'Envie os documentos', 'Avaliação dos mentores'],
+      '.step p': ['Dados básicos, instituição e programa que pretende financiar.', 'Uma breve declaração — não é necessário contratar um serviço de redação.', 'Histórico escolar, documento de identificação e uma carta de recomendação.', 'Dois avaliadores analisam a candidatura em uma média de 18 dias.'],
+      '.apply-copy h3': 'Pronto quando você estiver',
+      '.apply-copy p': 'Preencha o formulário curto e criaremos o seu perfil de candidato. Enviaremos um link seguro para concluir as etapas 2–4, incluindo o envio dos documentos.',
+      '.criteria li': ['Matriculado ou aceite num programa acreditado', 'Menor de 30 anos no momento da candidatura', 'Disponibilidade para enviar uma referência académica', 'Sem GPA mínimo — analisamos o perfil completo'],
+      '#applicationForm label': ['Nome completo', 'Endereço de email', 'Área de estudo', 'Nível de estudos', 'Em uma frase, por que precisa desta bolsa?'],
+      '#fullName': 'Haille Kensany', '#email': 'voce@email.com', '#programme': 'ex.: Ciência da Computação', '#statement': 'Conte brevemente o que pretende alcançar',
+      '#level option:first-child': 'Selecione o nível',
+      '#applicationForm button': 'Criar a minha candidatura',
+      '.form-note': 'Receberá um email com um link para enviar os documentos. Sem taxas, nunca.',
+      '#formStatus': '✓ Perfil criado — verifique o seu email para o próximo passo (demonstração; nenhum dado foi enviado).',
+      '#documents .eyebrow': 'Enviar documentos',
+      '#documents h2': 'Quatro ficheiros. Esta é toda a lista.',
+      '#documents .section-head p': 'Formatos aceites: PDF, JPG ou PNG, até 10 MB por ficheiro. Pode voltar e concluir mais tarde usando o link da primeira etapa.',
+      '.doc-card h4': ['Documento de identificação', 'Histórico escolar', 'Carta de recomendação', 'Comprovativo de admissão', 'Formulário de necessidade financeira (opcional)', 'Fotografia (opcional)'],
+      '.doc-card p': ['Passaporte, documento de identificação nacional ou carta de condução válida para confirmar a sua identidade.', 'O seu histórico escolar ou boletim mais recente, oficial ou não oficial.', 'Uma carta de um professor, docente ou supervisor que conheça o seu trabalho.', 'Carta de aceitação ou matrícula da sua instituição ou programa de formação.', 'Reforça a avaliação, mas não é obrigatória para enviar a candidatura.', 'Usada apenas no destaque de bolsistas, com a sua autorização.'],
+      '.upload-box h4': 'Arraste os ficheiros aqui ou clique para procurar',
+      '.upload-box p': 'PDF, JPG ou PNG — até 10 MB cada',
+      '#contact .eyebrow': 'Contato e FAQ',
+      '#contact h2': 'Ainda está a decidir? Fale primeiro connosco.',
+      '#contact .section-head p': 'Fale diretamente com a equipa de avaliação ou consulte as respostas às perguntas mais frequentes.',
+      '.info-list li span': ['Dúvidas gerais, respondidas em até 2 dias úteis', 'Segunda a sexta, das 9h às 19h', 'Chat disponível no portal após a primeira etapa'],
+      '.faq-item summary': ['Existe uma taxa de candidatura?', 'Posso candidatar-me enquanto aguardo a admissão?', 'Como é definido o valor da bolsa?', 'E se eu não tiver um documento?'],
+      '.faq-item p': ['Não. A DONZA HUB nunca cobra para candidatar-se, avaliar ou receber uma bolsa. Quem pedir um pagamento não representa a nossa organização.', 'Sim — comece agora e envie o comprovativo de admissão assim que o receber, antes do prazo de avaliação.', 'Os avaliadores consideram necessidade demonstrada e iniciativa com base na nossa matriz pública; o valor segue a faixa de pontuação.', 'A candidatura permanece em rascunho. Receberá um lembrete e poderá terminar o envio antes do prazo final.'],
+      '.contact-card h3': 'Envie-nos uma mensagem', '.contact-card > p': 'Para qualquer assunto não respondido no FAQ.',
+      '#contactForm label': ['Nome', 'Email', 'Mensagem'], '#cName': 'O seu nome', '#cEmail': 'voce@email.com', '#cMsg': 'Como podemos ajudar?',
+      '#contactForm button': 'Enviar mensagem', '#contactStatus': '✓ Mensagem recebida — a equipa responderá em até 2 dias úteis (demonstração).',
+      'footer p': 'Bolsas avaliadas por mentores, não por máquinas. Sem taxas, nunca.', 'footer h5': ['Explorar', 'Candidatos', 'Legal'],
+      'footer .footer-grid > div:not(:first-child) a': ['Início', 'Sobre nós', 'Candidatura', 'Enviar documentos', 'FAQ', 'Falar com o suporte', 'Política de privacidade', 'Termos de utilização'],
+      '.footer-bottom span': ['© 2026 DONZA HUB. Todos os direitos reservados.', 'Feito para estudantes que não desistem.']
+    },
+    en: {
+      'header nav ul li a': ['Home', 'Application', 'About Us', 'Services & Prices', 'Testimonial', 'Submit Documents', 'Contact & FAQ'], '.mobile-nav a': ['Home', 'Application', 'About Us', 'Services & Prices', 'Testimonial', 'Submit Documents', 'Contact & FAQ'], '.nav-cta': 'Apply Now',
+      '.hero .tag-pill': '<span class="dot" style="background:var(--green); box-shadow:0 0 0 4px rgba(61,93,255,0.12);"></span> Nims 2026-2027 applications open', '.hero h1': 'Funding the <em>next builders,</em><br>not just the top scorers.', '.hero .lead': 'DONZA HUB awards tuition scholarships to students who show grit, curiosity and real-world initiative — not just a GPA. Apply once, get reviewed by real mentors, hear back in weeks.', '.hero-actions .btn-primary': 'Start your application', '.hero-actions .btn-outline': 'Learn how it works', '.hero-stats span': ['scholars funded', 'awarded to date', 'average decision time'], '.seal-card h3': 'Scholarship at a glance', '.seal-card p': 'Everything you need before you begin', '.seal-list li': ['Open to undergrad & vocational students', 'One shared application, four document uploads', 'Rolling review — apply anytime before the deadline'],
+      '#about .eyebrow': 'About Us', '#about h2': 'A scholarship hub built by former applicants.', '#about .section-head p': 'DONZA HUB started in 2025 when one university student (Haille Kensany) got tired of watching capable students give up on funding because the process was confusing. We rebuilt it from scratch: one form, transparent criteria, and a mentor on every file.', '#about .about-card h4': ['Our mission', 'How review works', 'Transparency', 'Access first', 'Mentorship', 'Speed'], '#about .about-card p': ["Remove the paperwork barrier between motivated students and the funding they've earned, and pair every scholar with a mentor for the year they're funded.", 'Every application is read by two independent reviewers from our mentor network — never an algorithm alone — and scored against the same public rubric.', "Our scoring rubric is public. You'll always know what you're being measured against.", 'No application fee, no minimum GPA cutoff, no institution restriction.', 'Every award comes with a mentor check-in, not just a one-time cheque.', 'Rolling decisions — most applicants hear back inside three weeks.'], '#application .eyebrow': 'Application', '#application h2': 'Four steps from opening this page to a decision.', '#application .section-head p': "The process is sequential on purpose — each step unlocks the next so you're never guessing what happens after you hit submit.", '.step h4': ['Create your profile', 'Tell your story', 'Submit documents', 'Mentor review'], '.step p': ['Basic details, school, and the programme you\'re funding.', 'A short statement — no essay-writing service required.', 'Transcript, ID, and one recommendation letter.', 'Two reviewers score your file within 18 days on average.'], '.apply-copy h3': 'Ready when you are', '.apply-copy p': "Fill in the short form and we'll create your applicant profile and email you a secure link to finish steps 2–4, including document upload.", '.criteria li': ['Enrolled or accepted into an accredited programme', 'Under 30 years old at time of application', 'Able to submit one academic reference', 'No minimum GPA — we read the whole file'], '.hero-stats div > span:not(.stat-icon)': ["universities recognized among Asia's best", 'African students who have benefited from the programme', 'graduates now working in major markets'], '#applicationForm label': ['Full name', 'Email address', 'Field of study', 'Study level', 'In one sentence, why this scholarship?'], '#fullName': 'Haille Kensany', '#email': 'you@email.com', '#programme': 'e.g. Computer Science', '#statement': "Tell us briefly what you're working toward", '#level option:first-child': 'Select level', '#applicationForm button': 'Create my application', '.form-note': "You'll get an email with a link to finish document upload. No fee, ever.", '#formStatus': '✓ Profile created — check your email for the next step (demo only, no data was sent anywhere).', '#documents .eyebrow': 'Submit Documents', '#documents h2': "Four files. That's the whole checklist.", '#documents .section-head p': 'Accepted formats: PDF, JPG or PNG, 10MB max per file. You can come back and finish this later using the link from step 1.', '.doc-card h4': ['Government ID', 'Academic transcript', 'Reference letter', 'Proof of admission', 'Financial need form (optional)', 'Headshot (optional)'], '.doc-card p': ["A valid passport, national ID, or driver's licence to confirm your identity.", 'Your most recent transcript or report card, official or unofficial.', 'One letter from a teacher, professor, or supervisor who knows your work.', 'Acceptance or enrolment letter from your school or training programme.', 'Strengthens your review but is not required to submit an application.', "Used only if you're featured in our scholar spotlight, with your permission."], '.upload-box h4': 'Drag files here, or click to browse', '.upload-box p': 'PDF, JPG or PNG — up to 10MB each', '#contact .eyebrow': 'Contact & FAQ', '#contact h2': 'Still deciding? Talk to us first.', '#contact .section-head p': 'Reach the review team directly, or check the answers we get asked the most.', '.info-list li span': ['General questions, answered within 2 business days', 'Mon–Fri, 9am–7pm', 'Live chat inside your applicant portal after step 1'], '.faq-item summary': ['Is there an application fee?', "Can I apply if I'm still waiting on admission results?", 'How is the award amount decided?', 'What if I miss a document?'], '.faq-item p': ['No. DONZA HUB never charges to apply, review, or disburse a scholarship. Anyone asking you to pay is not us.', 'Yes — start your application now and upload proof of admission once you receive it, before the review deadline.', 'Reviewers score demonstrated need and initiative against our public rubric; award size follows the score band, not a fixed formula.', "Your file stays in draft. You'll get a reminder email and can finish uploading anytime before the deadline."], '.contact-card h3': 'Send us a message', '.contact-card > p': 'For anything not covered in the FAQ.', '#contactForm label': ['Name', 'Email', 'Message'], '#cName': 'Your name', '#cEmail': 'you@email.com', '#cMsg': 'How can we help?', '#contactForm button': 'Send message', '#contactStatus': '✓ Message received — the team will reply within 2 business days (demo only).', 'footer p': 'Scholarships reviewed by mentors, not machines. No fees, ever.', 'footer h5': ['Explore', 'Applicants', 'Legal'], 'footer .footer-grid a': ['Home', 'About us', 'Application', 'Submit documents', 'FAQ', 'Contact support', 'Privacy policy', 'Terms of use'], '.footer-bottom span': ['© 2026 DONZA HUB. All rights reserved.', "Made for students who don't quit."]
+    }
+  };
+
+  function applyLanguage(language){
+    currentLanguage = language;
+    const content = languageContent[language];
+    Object.entries(content).forEach(([selector, value]) => {
+      const targetSelector = selector === 'footer .footer-grid a' ? 'footer .footer-grid > div:not(:first-child) a' : selector;
+      const elements = document.querySelectorAll(targetSelector);
+      const values = Array.isArray(value) ? value : [value];
+      elements.forEach((element, index) => {
+        if (selector.startsWith('#') && ['#fullName','#email','#programme','#statement','#cName','#cEmail','#cMsg'].includes(selector)) element.placeholder = values[0];
+        else if (index < values.length) element[selector === '.hero .tag-pill' || selector === '.hero h1' ? 'innerHTML' : 'textContent'] = values[index];
+      });
+    });
+    document.documentElement.lang = language === 'pt' ? 'pt-BR' : 'en';
+    document.title = language === 'pt' ? 'DONZA HUB - Programa de Bolsas' : 'DONZA HUB - Scholarship Programme';
+    document.getElementById('ptButton').classList.toggle('active', language === 'pt');
+    document.getElementById('enButton').classList.toggle('active', language === 'en');
+    document.getElementById('ptButton').setAttribute('aria-pressed', language === 'pt');
+    document.getElementById('enButton').setAttribute('aria-pressed', language === 'en');
+  }
+
+  document.getElementById('ptButton').addEventListener('click', () => applyLanguage('pt'));
+  document.getElementById('enButton').addEventListener('click', () => applyLanguage('en'));
+  applyLanguage('pt');
+</script>
+</body>
+</html>
